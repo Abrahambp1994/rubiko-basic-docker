@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "5050:5000"
+    environment:
+      - GREETINGS=Hello Rubiko Tech!
+    networks:
+      - my_network
+  curl:
+    depends_on:
+      - web
+    image: curlimages/curl
+    command: ["sh", "-c", "sleep 10 && curl http://web:5000/health"]
+
+    networks:
+      - my_network
+
+networks:
+  my_network:
+      driver: bridge
+
+    
